@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ixaria — The Conversion Engine for Furniture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --navy:   #090959;
+      --elec:   #0000FF;
+      --arctic: #00CCFF;
+      --orange: #FF5F0A;
+      --yellow: #FFDA00;
+      --black:  #111111;
+      --white:  #FFFFFF;
+      --gray-light: #F5F6FA;
+      --gray-mid:   #E8E9F0;
+      --gray-text:  #555570;
+
+      --font-head: 'Montserrat', sans-serif;
+      --font-body: 'Inter', sans-serif;
+
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(9,9,89,0.08);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--black); background: var(--white); line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── UTILITY ─────────────────────────────────────────── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 32px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 8px; font-family: var(--font-head);
+      font-weight: 700; font-size: 15px; cursor: pointer; border: none;
+      transition: transform .18s, box-shadow .18s, opacity .18s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.15); }
+    .btn-primary   { background: var(--elec); color: var(--white); }
+    .btn-secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+    .btn-orange    { background: var(--orange); color: var(--white); }
+    .btn-white     { background: var(--white); color: var(--navy); }
+
+    .section-label {
+      display: inline-block; font-family: var(--font-head); font-weight: 700;
+      font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--elec); margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-head); font-weight: 900;
+      font-size: clamp(28px, 4vw, 42px); line-height: 1.15;
+      color: var(--navy); margin-bottom: 20px;
+    }
+    .section-sub {
+      font-size: 17px; color: var(--gray-text); max-width: 620px; line-height: 1.7;
+    }
+
+    /* ─── NAVBAR ──────────────────────────────────────────── */
+    .navbar {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--white); border-bottom: 1px solid var(--gray-mid);
+      box-shadow: 0 2px 12px rgba(9,9,89,0.06);
+    }
+    .navbar__inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 72px; max-width: 1160px; margin: 0 auto;
+    }
+    .navbar__logo img { height: 36px; width: auto; }
+    .navbar__nav { display: flex; align-items: center; gap: 36px; }
+    .navbar__nav a {
+      font-family: var(--font-head); font-weight: 600; font-size: 14px;
+      color: var(--black); transition: color .15s;
+    }
+    .navbar__nav a:hover { color: var(--elec); }
+    .navbar__right { display: flex; align-items: center; gap: 16px; }
+    .lang-switcher {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-head); font-weight: 600; font-size: 13px;
+      color: var(--gray-text); cursor: pointer; position: relative;
+    }
+    .lang-switcher svg { width: 16px; height: 16px; }
+    .lang-dropdown {
+      display: none; position: absolute; top: calc(100% + 10px); right: 0;
+      background: var(--white); border: 1px solid var(--gray-mid);
+      border-radius: 8px; overflow: hidden; box-shadow: var(--shadow);
+      min-width: 140px; z-index: 200;
+    }
+    .lang-dropdown a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; font-size: 13px; font-family: var(--font-head);
+      font-weight: 600; color: var(--black); transition: background .15s;
+    }
+    .lang-dropdown a:hover { background: var(--gray-light); }
+    .lang-dropdown a.active { color: var(--elec); }
+    .lang-switcher:hover .lang-dropdown,
+    .lang-switcher:focus-within .lang-dropdown { display: block; }
+    .navbar__mobile-toggle { display: none; background: none; border: none; cursor: pointer; }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    .hero {
+      padding: 100px 0 80px;
+      background: var(--white);
+    }
+    .hero__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 64px; align-items: center;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+    }
+    .hero__tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,0,255,0.07); color: var(--elec);
+      font-family: var(--font-head); font-weight: 700; font-size: 12px;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
+    }
+    .hero__title {
+      font-family: var(--font-head); font-weight: 900;
+      font-size: clamp(32px, 4.5vw, 52px); line-height: 1.1;
+      color: var(--navy); margin-bottom: 24px;
+    }
+    .hero__title span { color: var(--elec); }
+    .hero__body {
+      font-size: 17px; color: var(--gray-text); line-height: 1.75;
+      margin-bottom: 36px; max-width: 500px;
+    }
+    .hero__badges {
+      display: flex; flex-wrap: wrap; gap: 20px;
+      margin-bottom: 40px;
+    }
+    .hero__badge {
+      display: flex; align-items: center; gap: 8px;
+      font-family: var(--font-head); font-weight: 600; font-size: 13px;
+      color: var(--navy);
+    }
+    .hero__badge svg { color: var(--elec); }
+    .hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    /* Product page mockup */
+    .hero__mockup {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 8px 48px rgba(9,9,89,0.12);
+      overflow: hidden;
+      border: 1px solid var(--gray-mid);
+    }
+    .mockup__bar {
+      background: var(--gray-light); padding: 10px 16px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .mockup__dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .mockup__body { padding: 24px; }
+    .mockup__breadcrumb {
+      font-size: 11px; color: var(--gray-text); margin-bottom: 16px;
+    }
+    .mockup__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .mockup__img-area {
+      background: var(--gray-light); border-radius: 8px;
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .mockup__img-area svg { opacity: .25; width: 48px; height: 48px; }
+    .mockup__3d-badge {
+      position: absolute; top: 10px; right: 10px;
+      background: var(--elec); color: var(--white);
+      font-family: var(--font-head); font-weight: 700; font-size: 10px;
+      padding: 4px 8px; border-radius: 4px;
+    }
+    .mockup__info { }
+    .mockup__prod-title {
+      font-family: var(--font-head); font-weight: 800; font-size: 15px;
+      color: var(--navy); margin-bottom: 4px;
+    }
+    .mockup__stars { color: var(--yellow); font-size: 12px; margin-bottom: 8px; }
+    .mockup__price {
+      font-family: var(--font-head); font-weight: 900; font-size: 22px;
+      color: var(--navy); margin-bottom: 12px;
+    }
+    .mockup__label {
+      font-size: 10px; font-weight: 700; font-family: var(--font-head);
+      color: var(--gray-text); text-transform: uppercase; letter-spacing: .08em;
+      margin-bottom: 6px;
+    }
+    .mockup__swatches { display: flex; gap: 5px; margin-bottom: 12px; }
+    .mockup__swatch {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--gray-mid);
+    }
+    .mockup__configs { display: flex; gap: 5px; margin-bottom: 14px; }
+    .mockup__config {
+      font-size: 9px; font-family: var(--font-head); font-weight: 600;
+      padding: 4px 8px; border-radius: 4px; border: 1px solid var(--gray-mid);
+      color: var(--gray-text);
+    }
+    .mockup__config.active {
+      border-color: var(--elec); color: var(--elec); background: rgba(0,0,255,0.05);
+    }
+    .mockup__add-btn {
+      width: 100%; background: var(--elec); color: var(--white);
+      font-family: var(--font-head); font-weight: 700; font-size: 11px;
+      padding: 8px; border-radius: 6px; border: none; cursor: pointer;
+    }
+    .mockup__tabs {
+      display: flex; gap: 12px; margin-top: 16px;
+      border-bottom: 1px solid var(--gray-mid); padding-bottom: 8px;
+    }
+    .mockup__tab {
+      font-size: 10px; font-family: var(--font-head); font-weight: 600;
+      color: var(--gray-text); padding-bottom: 6px;
+    }
+    .mockup__tab.active { color: var(--elec); border-bottom: 2px solid var(--elec); }
+    .mockup__details {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px;
+    }
+    .mockup__detail {
+      font-size: 9px; color: var(--gray-text);
+      display: flex; justify-content: space-between;
+      padding: 4px 0; border-bottom: 1px solid var(--gray-mid);
+    }
+    .mockup__detail span:last-child { font-weight: 600; color: var(--black); }
+
+    /* ─── SOCIAL PROOF ────────────────────────────────────── */
+    .social-proof { padding: 80px 0; background: var(--white); }
+    .social-proof__top {
+      display: grid;
+      grid-template-columns: 1.7fr 1fr 1fr 1fr;
+      /* Full outer box — both horizontal lines come from here */
+      border-top: 1px solid var(--gray-mid);
+      border-bottom: 1px solid var(--gray-mid);
+      /* stretch children to full row height so vertical lines touch */
+      align-items: stretch;
+      margin-bottom: 56px;
+    }
+    .social-proof__claim {
+      font-family: var(--font-body); font-weight: 400;
+      font-size: 14px; color: var(--black); line-height: 1.7;
+      padding: 28px 32px 28px 0;
+      border-right: 1px solid var(--gray-mid);
+      display: flex; align-items: center;
+    }
+    .stat-item {
+      display: flex; flex-direction: row; align-items: center;
+      gap: 14px; padding: 28px 24px;
+      border-right: 1px solid var(--gray-mid);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      border: 1.5px dashed var(--elec);
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .stat-icon svg { width: 16px; height: 16px; color: var(--elec); }
+    .stat-text strong {
+      font-family: var(--font-head); font-weight: 700; font-size: 13px;
+      color: var(--navy); display: block; line-height: 1.4;
+    }
+    .logos-strip {
+      display: flex; align-items: center; justify-content: space-evenly;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .logos-strip img {
+      height: 36px; width: auto;
+      filter: grayscale(100%) opacity(0.45);
+      transition: filter .2s;
+    }
+    .logos-strip img:hover { filter: grayscale(100%) opacity(0.75); }
+    /* expomob SVG is very wide — cap it */
+    .logo-expomob { max-width: 120px; height: auto !important; }
+    /* agache SVG is tall — adjust */
+    .logo-agache { height: 28px !important; }
+
+    /* ─── CTA STRIP ───────────────────────────────────────── */
+    .cta-strip { padding: 48px 0; background: var(--white); }
+    .cta-strip__inner {
+      display: grid; grid-template-columns: 280px 1fr auto;
+      align-items: center; gap: 0;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+      background: var(--navy);
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 130px;
+    }
+    .cta-strip__image {
+      height: 100%; min-height: 130px;
+      background: linear-gradient(135deg, #0a0a6e 0%, #12126e 100%);
+      display: flex; align-items: flex-end; justify-content: center;
+      overflow: hidden; position: relative;
+    }
+    .cta-strip__image svg {
+      position: absolute; bottom: 0; width: 100%; opacity: .18;
+    }
+    .cta-strip__image-sofa {
+      font-size: 72px; line-height: 1;
+      position: absolute; bottom: 8px; left: 50%;
+      transform: translateX(-50%);
+      filter: drop-shadow(0 -8px 24px rgba(0,0,200,0.4));
+    }
+    .cta-strip__text {
+      padding: 28px 36px;
+    }
+    .cta-strip__title {
+      font-family: var(--font-head); font-weight: 900;
+      font-size: clamp(16px, 2vw, 22px); color: var(--white);
+      margin-bottom: 8px; line-height: 1.25;
+    }
+    .cta-strip__body { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+    .cta-strip__btn-wrap { padding: 28px 32px 28px 0; flex-shrink: 0; }
+
+    /* ─── HOW IT WORKS ────────────────────────────────────── */
+    .how { padding: 100px 0; background: var(--gray-light); }
+    .how__header { text-align: center; margin-bottom: 24px; }
+    .how__sub {
+      text-align: center; font-size: 16px; color: var(--gray-text);
+      max-width: 580px; margin: 0 auto 16px;
+    }
+    .how__timing {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: var(--font-head); font-weight: 700; font-size: 13px;
+      color: var(--navy); margin-bottom: 72px;
+    }
+    .how__timing svg { width: 16px; height: 16px; color: var(--navy); }
+    .how__steps {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;
+    }
+    .step {
+      background: var(--white); border-radius: var(--radius);
+      padding: 36px 28px; box-shadow: var(--shadow);
+      position: relative; border-top: 3px solid transparent;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .step:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(9,9,89,0.12); }
+    .step:nth-child(1) { border-top-color: var(--elec); }
+    .step:nth-child(2) { border-top-color: var(--arctic); }
+    .step:nth-child(3) { border-top-color: var(--orange); }
+    .step:nth-child(4) { border-top-color: var(--yellow); }
+    .step__num {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--elec); color: var(--white);
+      font-family: var(--font-head); font-weight: 900; font-size: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .step:nth-child(2) .step__num { background: var(--arctic); }
+    .step:nth-child(3) .step__num { background: var(--orange); }
+    .step:nth-child(4) .step__num { background: var(--yellow); color: var(--navy); }
+    .step__icon { font-size: 28px; margin-bottom: 16px; }
+    .step__title {
+      font-family: var(--font-head); font-weight: 800; font-size: 16px;
+      color: var(--navy); margin-bottom: 14px; line-height: 1.3;
+    }
+    .step__body { font-size: 14px; color: var(--gray-text); line-height: 1.7; }
+
+    /* ─── FEATURES ────────────────────────────────────────── */
+    .features { padding: 100px 0; background: var(--white); }
+    .features__header { text-align: center; margin-bottom: 72px; }
+    .features__grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
+    }
+    .feature-card {
+      padding: 40px 32px;
+      border: 1px solid var(--gray-mid);
+      border-radius: var(--radius);
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+    }
+    .feature-card:hover {
+      border-color: var(--elec);
+      box-shadow: 0 8px 32px rgba(0,0,255,0.08);
+      transform: translateY(-3px);
+    }
+    /* 5 cards: 3+2 layout — last row of 2 is centered */
+    .features__grid .feature-card:nth-child(4) {
+      grid-column: 1 / 2;
+    }
+    .features__grid .feature-card:nth-child(5) {
+      grid-column: 2 / 3;
+    }
+    .feature-icon {
+      width: 52px; height: 52px; border-radius: 12px;
+      background: rgba(0,0,255,0.07); display: flex;
+      align-items: center; justify-content: center;
+      margin-bottom: 22px; font-size: 24px;
+    }
+    .feature-title {
+      font-family: var(--font-head); font-weight: 800; font-size: 18px;
+      color: var(--navy); margin-bottom: 14px; line-height: 1.3;
+    }
+    .feature-body { font-size: 15px; color: var(--gray-text); line-height: 1.7; }
+
+    /* ─── EMAIL CAPTURE ───────────────────────────────────── */
+    .email-capture { padding: 100px 0; background: var(--gray-light); }
+    .email-capture__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: center;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+    }
+    .email-capture__img {
+      border-radius: 16px; overflow: hidden;
+      background: linear-gradient(135deg, var(--navy) 0%, #0d0d7a 100%);
+      aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+    }
+    .email-capture__img-inner {
+      text-align: center; padding: 40px;
+    }
+    .email-capture__img-inner .big-icon { font-size: 64px; margin-bottom: 16px; }
+    .email-capture__img-inner p {
+      font-family: var(--font-head); font-weight: 700; font-size: 18px;
+      color: rgba(255,255,255,0.7); line-height: 1.4;
+    }
+    .email-capture__form-area { }
+    .email-form {
+      display: flex; gap: 12px; margin: 32px 0 14px;
+    }
+    .email-form input {
+      flex: 1; padding: 14px 18px; border-radius: 8px;
+      border: 1px solid var(--gray-mid); font-family: var(--font-body);
+      font-size: 15px; color: var(--black); background: var(--white);
+      outline: none; transition: border-color .15s;
+    }
+    .email-form input:focus { border-color: var(--elec); }
+    .email-form input::placeholder { color: #aaa; }
+    .email-reassurance {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 13px; color: var(--gray-text); line-height: 1.5;
+    }
+    .email-reassurance svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; color: var(--gray-text); }
+
+    /* ─── ABOUT ───────────────────────────────────────────── */
+    .about { padding: 100px 0; background: var(--white); }
+    .about__inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 80px; align-items: start;
+      max-width: 1160px; margin: 0 auto; padding: 0 32px;
+    }
+    .about__left { }
+    .about__title {
+      font-family: var(--font-head); font-weight: 900;
+      font-size: clamp(32px, 4vw, 48px); line-height: 1.1;
+      color: var(--navy); margin-bottom: 24px;
+    }
+    .about__title span { color: var(--orange); }
+    .about__body { font-size: 16px; color: var(--gray-text); line-height: 1.8; margin-bottom: 40px; }
+    .founders { display: flex; gap: 24px; }
+    .founder {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .founder__avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--gray-mid); border: 3px solid var(--elec);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; overflow: hidden;
+    }
+    .founder__name {
+      font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--navy);
+    }
+    .founder__role { font-size: 12px; color: var(--gray-text); }
+
+    .about__right { }
+    .values__title {
+      font-family: var(--font-head); font-weight: 800; font-size: 22px;
+      color: var(--navy); margin-bottom: 28px;
+    }
+    .values { display: flex; flex-direction: column; gap: 24px; }
+    .value-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 22px 22px; border-radius: var(--radius);
+      background: var(--gray-light);
+      border-left: 3px solid var(--yellow);
+    }
+    .value-item:nth-child(2) { border-left-color: var(--orange); }
+    .value-item:nth-child(3) { border-left-color: var(--arctic); }
+    .value-item:nth-child(4) { border-left-color: var(--elec); }
+    .value-quote { font-size: 28px; color: var(--yellow); flex-shrink: 0; line-height: 1; }
+    .value-item:nth-child(2) .value-quote { color: var(--orange); }
+    .value-item:nth-child(3) .value-quote { color: var(--arctic); }
+    .value-item:nth-child(4) .value-quote { color: var(--elec); }
+    .value-text { font-size: 14px; color: var(--gray-text); line-height: 1.7; }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    .footer { background: var(--navy); padding: 80px 0 40px; }
+    .footer__grid {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 60px;
+    }
+    .footer__logo { margin-bottom: 16px; }
+    .footer__logo img { height: 32px; }
+    .footer__tagline { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 24px; }
+    .footer__social { display: flex; gap: 14px; }
+    .footer__social a {
+      width: 38px; height: 38px; border-radius: 8px;
+      background: rgba(255,255,255,0.1); display: flex;
+      align-items: center; justify-content: center;
+      color: var(--white); transition: background .15s;
+    }
+    .footer__social a:hover { background: var(--elec); }
+    .footer__social svg { width: 16px; height: 16px; }
+    .footer__col-title {
+      font-family: var(--font-head); font-weight: 700; font-size: 13px;
+      color: var(--white); text-transform: uppercase; letter-spacing: .1em;
+      margin-bottom: 20px;
+    }
+    .footer__links { display: flex; flex-direction: column; gap: 12px; }
+    .footer__links a {
+      font-size: 14px; color: rgba(255,255,255,0.6); transition: color .15s;
+    }
+    .footer__links a:hover { color: var(--white); }
+    .footer__bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer__copy { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+    /* ─── TALK TO US BUTTON ───────────────────────────────── */
+    .talk-btn {
+      position: fixed; bottom: 32px; right: 32px; z-index: 999;
+      display: flex; align-items: center; gap: 10px;
+      background: var(--navy); color: var(--white);
+      font-family: var(--font-head); font-weight: 700; font-size: 14px;
+      padding: 14px 22px; border-radius: 100px;
+      box-shadow: 0 4px 24px rgba(9,9,89,0.3);
+      cursor: pointer; border: none;
+      transition: transform .2s, box-shadow .2s, background .2s;
+    }
+    .talk-btn:hover {
+      background: var(--elec); transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,255,0.3);
+    }
+    .talk-btn__dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--arctic); flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.4); opacity: .7; }
+    }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .how__steps { grid-template-columns: repeat(2, 1fr); }
+      .features__grid { grid-template-columns: repeat(2, 1fr); }
+      .features__grid .feature-card:nth-child(5) { grid-column: span 2; }
+    }
+    @media (max-width: 768px) {
+      .navbar__nav, .lang-switcher { display: none; }
+      .navbar__mobile-toggle { display: block; }
+      .hero__inner { grid-template-columns: 1fr; gap: 48px; }
+      .social-proof__top { grid-template-columns: 1fr 1fr; }
+      .social-proof__claim { grid-column: span 2; border-right: none; border-bottom: 1px solid var(--gray-mid); padding: 24px 0; }
+      .stat-item:nth-child(2) { border-right: 1px solid var(--gray-mid); }
+      .stat-item:nth-child(3) { border-right: none; }
+      .stat-item:nth-child(4) { border-top: 1px solid var(--gray-mid); border-right: none; }
+      .stat-item:nth-child(3) { border-top: 0; }
+      .cta-strip__inner { grid-template-columns: 1fr; }
+      .cta-strip__image { display: none; }
+      .cta-strip__text { padding: 24px 24px 16px; }
+      .cta-strip__btn-wrap { padding: 0 24px 24px; }
+      .how__steps { grid-template-columns: 1fr; }
+      .features__grid { grid-template-columns: 1fr; }
+      .features__grid .feature-card:nth-child(5) { grid-column: span 1; }
+      .email-capture__inner { grid-template-columns: 1fr; }
+      .email-capture__img { display: none; }
+      .about__inner { grid-template-columns: 1fr; gap: 48px; }
+      .footer__grid { grid-template-columns: 1fr 1fr; }
+      .logos-strip { justify-content: center; }
+      .talk-btn span { display: none; }
+      .talk-btn { padding: 14px; }
+    }
+    @media (max-width: 480px) {
+      .footer__grid { grid-template-columns: 1fr; }
+      .hero__ctas { flex-direction: column; }
+      .email-form { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════ NAVBAR ══════════ -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="logo-light.svg" alt="Ixaria" />
+    </a>
+    <div class="navbar__nav">
+      <a href="#how-it-works">How it works</a>
+      <a href="#features">Features</a>
+      <a href="#about">About us</a>
+    </div>
+    <div class="navbar__right">
+      <div class="lang-switcher" tabindex="0">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <span id="lang-label">EN</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+        <div class="lang-dropdown">
+          <a href="#" class="active" onclick="setLang('EN','English');return false;">🇬🇧 English</a>
+          <a href="#" onclick="setLang('RO','Română');return false;">🇷🇴 Română</a>
+          <a href="#" onclick="setLang('PT','Português');return false;">🇵🇹 Português</a>
+          <a href="#" onclick="setLang('ES','Español');return false;">🇪🇸 Español</a>
+          <a href="#" onclick="setLang('DE','Deutsch');return false;">🇩🇪 Deutsch</a>
+        </div>
+      </div>
+      <a href="#book" class="btn btn-primary" style="padding:10px 22px;font-size:13px;color:#ffffff;">Book a discovery call</a>
+    </div>
+    <button class="navbar__mobile-toggle" aria-label="Menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero" id="hero">
+  <div class="hero__inner">
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Product pages for furniture shaped by <span>real customer behavior</span>
+      </h1>
+      <p class="hero__body">
+        Ixaria replaces fragmented ecommerce plugins with one system that centralizes images, videos, product information, 3D configuration, reviews, and analytics — built to work on top of your current webshop and automatically improve from how your own customers browse, compare, hesitate, and buy.
+      </p>
+      <div class="hero__badges">
+        <div class="hero__badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0000FF" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Fast implementation
+        </div>
+        <div class="hero__badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0000FF" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Fair prices
+        </div>
+        <div class="hero__badge">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0000FF" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+          Money Back Guarantee
+        </div>
+      </div>
+      <div class="hero__ctas">
+        <a href="#book" class="btn btn-primary">Book a discovery call</a>
+        <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
+      </div>
+    </div>
+
+    <!-- Product page mockup -->
+    <div class="hero__mockup">
+      <div class="mockup__bar">
+        <div class="mockup__dot" style="background:#FF5F0A"></div>
+        <div class="mockup__dot" style="background:#FFDA00"></div>
+        <div class="mockup__dot" style="background:#00CC66"></div>
+      </div>
+      <div class="mockup__body">
+        <div class="mockup__breadcrumb">Home / Sofas / Modena Sofa</div>
+        <div class="mockup__grid">
+          <div>
+            <div class="mockup__img-area">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 21v-4a2 2 0 0 1 4 0v4"/></svg>
+              <div class="mockup__3d-badge">⟳ View in 3D</div>
+            </div>
+            <div style="display:flex;gap:5px;margin-top:8px;">
+              <div style="width:36px;height:28px;background:var(--gray-light);border-radius:4px;border:1px solid var(--elec);"></div>
+              <div style="width:36px;height:28px;background:var(--gray-mid);border-radius:4px;"></div>
+              <div style="width:36px;height:28px;background:#c8b89a;border-radius:4px;"></div>
+              <div style="width:36px;height:28px;background:#5a6a7a;border-radius:4px;"></div>
+              <div style="width:36px;height:28px;background:#2d2d2d;border-radius:4px;"></div>
+            </div>
+          </div>
+          <div class="mockup__info">
+            <div class="mockup__prod-title">Modena Sofa</div>
+            <div class="mockup__stars">★★★★★ <span style="color:var(--gray-text);font-size:10px;">4.8 (128)</span></div>
+            <div class="mockup__price">€1,249.00</div>
+            <div class="mockup__label">Select fabric</div>
+            <div class="mockup__swatches">
+              <div class="mockup__swatch" style="background:#f0ebe3;border-color:var(--elec);"></div>
+              <div class="mockup__swatch" style="background:#c8b89a;"></div>
+              <div class="mockup__swatch" style="background:#8b7355;"></div>
+              <div class="mockup__swatch" style="background:#4a5568;"></div>
+              <div class="mockup__swatch" style="background:#2d2d2d;"></div>
+            </div>
+            <div class="mockup__label">Configure</div>
+            <div class="mockup__configs">
+              <div class="mockup__config">2 Seater</div>
+              <div class="mockup__config active">3 Seater</div>
+              <div class="mockup__config">Corner</div>
+            </div>
+            <button class="mockup__add-btn">Add to cart</button>
+          </div>
+        </div>
+        <div class="mockup__tabs">
+          <div class="mockup__tab active">Details</div>
+          <div class="mockup__tab">Dimensions</div>
+          <div class="mockup__tab">Materials</div>
+          <div class="mockup__tab">Delivery</div>
+          <div class="mockup__tab">Reviews (128)</div>
+        </div>
+        <div class="mockup__details">
+          <div class="mockup__detail"><span>High-res images</span><span>12</span></div>
+          <div class="mockup__detail"><span>3D viewer</span><span>Interactive</span></div>
+          <div class="mockup__detail"><span>Materials</span><span>Premium fabric &amp; wood</span></div>
+          <div class="mockup__detail"><span>Seat depth</span><span>58 cm</span></div>
+          <div class="mockup__detail"><span>Made to order</span><span>Yes</span></div>
+          <div class="mockup__detail"><span>Warranty</span><span>10 years</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ SOCIAL PROOF ══════════ -->
+<section class="social-proof" id="social-proof">
+  <div class="container">
+    <div class="social-proof__top">
+      <div class="social-proof__claim">
+        Built from years of experience developing tools for furniture manufacturers: 3D configurators, images, videos, webshops.
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        </div>
+        <div class="stat-text">
+          <strong>Founded in 2021</strong>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M3 21a9 9 0 0 1 18 0"/></svg>
+        </div>
+        <div class="stat-text">
+          <strong>14+ years in furniture e-commerce</strong>
+        </div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="stat-text">
+          <strong>Created for manufacturers</strong>
+        </div>
+      </div>
+    </div>
+    <div class="logos-strip">
+      <img src="logo_agache.svg"       alt="Agache"       class="logo-agache" />
+      <img src="logo_divanissimi.png"  alt="Divanissimi" />
+      <img src="logo_expomob.svg"      alt="Expomob"      class="logo-expomob" />
+      <img src="logo_eurosun.png"      alt="Eurosun" />
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CTA STRIP ══════════ -->
+<section class="cta-strip" id="book">
+  <div class="cta-strip__inner">
+    <!-- Left image area -->
+    <div class="cta-strip__image">
+      <span class="cta-strip__image-sofa">🛋️</span>
+    </div>
+    <!-- Text -->
+    <div class="cta-strip__text">
+      <h2 class="cta-strip__title">Want to see what your current product page is missing?</h2>
+      <p class="cta-strip__body">Book a short call and we'll look at where your customers may be hesitating before they buy.</p>
+    </div>
+    <!-- CTA -->
+    <div class="cta-strip__btn-wrap">
+      <a href="https://calendly.com/ixaria" target="_blank" class="btn btn-primary" style="white-space:nowrap;font-size:13px;padding:12px 22px;">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ HOW IT WORKS ══════════ -->
+<section class="how" id="how-it-works">
+  <div class="container">
+    <div class="how__header">
+      <h2 class="section-title">How it works</h2>
+    </div>
+    <p class="how__sub">
+      We turn your product data into a product-page system, connect it to your webshop, and keep improving it based on how your customers actually browse, compare, and buy.
+    </p>
+    <div class="how__timing">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      All these in less than 1 month
+    </div>
+    <div class="how__steps">
+      <div class="step">
+        <div class="step__num">1</div>
+        <div class="step__icon">🗂️</div>
+        <h3 class="step__title">Gather your product data</h3>
+        <p class="step__body">Gather and organize everything behind each product: parts, assemblies, fabrics, materials, dimensions, configurations, pricing logic, care, delivery, and other buying-critical details.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">2</div>
+        <div class="step__icon">🔌</div>
+        <h3 class="step__title">Connect Ixaria to your webshop</h3>
+        <p class="step__body">Our team handles the setup, so you do not need to rebuild your entire webshop or add another complicated tool for your team to manage.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">3</div>
+        <div class="step__icon">🚀</div>
+        <h3 class="step__title">Review and launch the product pages</h3>
+        <p class="step__body">You review the product pages, request changes, and approve the final version. Once everything looks right, we set the pages live.</p>
+      </div>
+      <div class="step">
+        <div class="step__num">4</div>
+        <div class="step__icon">📈</div>
+        <h3 class="step__title">Let the system continuously improve</h3>
+        <p class="step__body">After launch, our system kicks in and monitors how customers browse, compare, hesitate, and buy and adapt pages based on this data.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FEATURES ══════════ -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="features__header">
+      <h2 class="section-title">Features</h2>
+    </div>
+    <div class="features__grid">
+      <div class="feature-card">
+        <div class="feature-icon">🧩</div>
+        <h3 class="feature-title">Replace fragmented plugins with one furniture-specific system</h3>
+        <p class="feature-body">Most furniture webshops rely on separate tools for 3D, product data, images, reviews, pricing, and analytics. Ixaria brings the product-page experience into one structured system, so your team does not have to manage a patchwork of disconnected tools.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3 class="feature-title">Product pages that improve after they go live</h3>
+        <p class="feature-body">A product page should not be treated as finished on launch day. Ixaria uses intelligent customer behavior to understand how people browse, compare, hesitate, and buy, then improves the page over time.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3 class="feature-title">Works on top of your current webshop</h3>
+        <p class="feature-body">You don't need to re-design your whole webshop or switch to a different one. Ixaria uses your existing webshop and focuses on the product page as the most important part of the buying journey.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3 class="feature-title">Specific to your products, customers, and buying journey</h3>
+        <p class="feature-body">Ixaria is not a generic template your competitors can simply copy. The system becomes stronger through your product data, your customer behavior, and the way your buyers make decisions.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">💡</div>
+        <h3 class="feature-title">Helps customers understand why your product is worth buying</h3>
+        <p class="feature-body">A beautiful image is not enough when the product is expensive, configurable, or hard to compare. Ixaria helps explain value through better structure, clearer information, stronger visuals, and trust-building content.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ EMAIL CAPTURE ══════════ -->
+<section class="email-capture" id="newsletter">
+  <div class="email-capture__inner">
+    <div class="email-capture__img">
+      <div class="email-capture__img-inner">
+        <div class="big-icon">🛋️</div>
+        <p>Follow how furniture manufacturers are turning complex products into better online experiences</p>
+      </div>
+    </div>
+    <div class="email-capture__form-area">
+      <h2 class="section-title" style="max-width:440px;">Not ready to change your product pages yet?</h2>
+      <p class="section-sub">Join our updates and follow how furniture manufacturers are turning complex products, configurators, and product data into better online buying experiences.</p>
+      <form class="email-form" onsubmit="handleEmailSubmit(event)">
+        <input type="email" placeholder="Work email" required />
+        <button type="submit" class="btn btn-primary">Stay in the loop</button>
+      </form>
+      <div class="email-reassurance">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Occasional updates. No spam. Only practical ideas about furniture ecommerce, product pages, and conversion.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ ABOUT ══════════ -->
+<section class="about" id="about">
+  <div class="about__inner">
+    <div class="about__left">
+      <h2 class="about__title">Built by <span>Builders.</span></h2>
+      <p class="about__body">
+        Based in the industrial heart of Timisoara, Ixaria was founded by Alex &amp; Victor with a single mission: to protect the legacy of European manufacturing from digital obsolescence.
+      </p>
+      <div class="founders">
+        <div class="founder">
+          <div class="founder__avatar">👤</div>
+          <div class="founder__name">Alex</div>
+          <div class="founder__role">Co-founder</div>
+        </div>
+        <div class="founder">
+          <div class="founder__avatar">👤</div>
+          <div class="founder__name">Victor</div>
+          <div class="founder__role">Co-founder</div>
+        </div>
+      </div>
+    </div>
+    <div class="about__right">
+      <div class="values__title">Our values</div>
+      <div class="values">
+        <div class="value-item">
+          <div class="value-quote">❝</div>
+          <p class="value-text">A strong partnership is a lot like a strong marriage: it only works when communication is open, honest, and consistent.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-quote">❝</div>
+          <p class="value-text">Trust is our foundation. No cut corners, no empty promises, and no BS, just honest work and decisions we can stand behind.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-quote">❝</div>
+          <p class="value-text">Professionalism matters, but lasting success comes from genuinely enjoying the people you build with. The best partnerships feel human, not transactional.</p>
+        </div>
+        <div class="value-item">
+          <div class="value-quote">❝</div>
+          <p class="value-text">We keep the work visible, the conversations direct, and the expectations clear from day one.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="footer__logo">
+          <img src="logo-dark.svg" alt="Ixaria" />
+        </div>
+        <p class="footer__tagline">The conversion engine for the furniture industry.</p>
+        <div class="footer__social">
+          <!-- LinkedIn -->
+          <a href="#" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <!-- YouTube -->
+          <a href="#" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#090959"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Website</div>
+        <div class="footer__links">
+          <a href="#social-proof">Why Ixaria</a>
+          <a href="#how-it-works">How it works</a>
+          <a href="#features">Results</a>
+          <a href="#book">Book a call</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Company</div>
+        <div class="footer__links">
+          <a href="#about">About</a>
+          <a href="mailto:hello@ixaria.ro">Contact</a>
+          <a href="#" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer__col-title">Legal</div>
+        <div class="footer__links">
+          <a href="privacy-policy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="cookie-policy.html">Cookie Policy</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <p class="footer__copy">© 2025 Ixaria. All rights reserved.</p>
+      <p class="footer__copy">Made with ❤️ in Timișoara, Romania</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ══════════ TALK TO US ══════════ -->
+<button class="talk-btn" onclick="window.location.href='mailto:hello@ixaria.ro'">
+  <div class="talk-btn__dot"></div>
+  <span>Talk to us</span>
+</button>
+
+<script>
+  // Language switcher
+  function setLang(code, label) {
+    document.getElementById('lang-label').textContent = code;
+    document.querySelectorAll('.lang-dropdown a').forEach(a => a.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+  // Email form
+  function handleEmailSubmit(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ You\'re in!';
+    btn.style.background = '#00aa55';
+    btn.disabled = true;
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Navbar scroll shadow
+  const navbar = document.querySelector('.navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.boxShadow = window.scrollY > 10
+      ? '0 4px 20px rgba(9,9,89,0.12)'
+      : '0 2px 12px rgba(9,9,89,0.06)';
+  });
+</script>
+</body>
+</html>
