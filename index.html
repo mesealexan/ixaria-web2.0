@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="IXARIA-logo.svg" />
   <title>Ixaria — The Conversion Engine for Furniture</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -73,7 +74,7 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 32px; height: 72px; max-width: 1160px; margin: 0 auto;
     }
-    .navbar__logo img { height: 36px; width: auto; }
+    .navbar__logo img { height: 54px; width: auto; }
     .navbar__nav { display: flex; align-items: center; gap: 36px; }
     .navbar__nav a {
       font-family: var(--font-head); font-weight: 600; font-size: 14px;
@@ -82,7 +83,7 @@
     .navbar__nav a:hover { color: var(--elec); }
     .navbar__right { display: flex; align-items: center; gap: 16px; }
     .lang-switcher {
-      display: flex; align-items: center; gap: 6px;
+      display: none; align-items: center; gap: 6px;
       font-family: var(--font-head); font-weight: 600; font-size: 13px;
       color: var(--gray-text); cursor: pointer; position: relative;
     }
@@ -143,13 +144,16 @@
     .hero__badge svg { color: var(--elec); }
     .hero__ctas { display: flex; gap: 16px; flex-wrap: wrap; }
 
-    /* Product page mockup */
+    /* Hero image */
     .hero__mockup {
-      background: var(--white);
       border-radius: 16px;
       box-shadow: 0 8px 48px rgba(9,9,89,0.12);
       overflow: hidden;
       border: 1px solid var(--gray-mid);
+    }
+    .hero__mockup img {
+      display: block;
+      width: 100%; height: auto;
     }
     .mockup__bar {
       background: var(--gray-light); padding: 10px 16px;
@@ -279,7 +283,25 @@
     .logo-agache { height: 28px !important; }
 
     /* ─── CTA STRIP ───────────────────────────────────────── */
-    .cta-strip { padding: 48px 0; background: var(--white); }
+    .cta-strip { padding: 30px 0; background: var(--white); overflow: hidden; }
+
+    /* Scroll animation states */
+    .cta-strip__inner {
+      opacity: 0; transform: translateX(-80px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .cta-strip__btn-wrap {
+      transform: translateX(60px);
+      transition: transform .55s ease .3s, opacity .55s ease .3s;
+      opacity: 0;
+    }
+    .cta-strip--visible .cta-strip__inner {
+      opacity: 1; transform: translateX(0);
+    }
+    .cta-strip--visible .cta-strip__btn-wrap {
+      transform: translateX(0); opacity: 1;
+    }
+
     .cta-strip__inner {
       display: grid; grid-template-columns: 280px 1fr auto;
       align-items: center; gap: 0;
@@ -287,22 +309,16 @@
       background: var(--navy);
       border-radius: 16px;
       overflow: hidden;
-      min-height: 130px;
+      min-height: 240px;
     }
     .cta-strip__image {
-      height: 100%; min-height: 130px;
-      background: linear-gradient(135deg, #0a0a6e 0%, #12126e 100%);
-      display: flex; align-items: flex-end; justify-content: center;
+      height: 100%; min-height: 240px;
       overflow: hidden; position: relative;
+      display: flex; align-items: center; justify-content: center;
     }
-    .cta-strip__image svg {
-      position: absolute; bottom: 0; width: 100%; opacity: .18;
-    }
-    .cta-strip__image-sofa {
-      font-size: 72px; line-height: 1;
-      position: absolute; bottom: 8px; left: 50%;
-      transform: translateX(-50%);
-      filter: drop-shadow(0 -8px 24px rgba(0,0,200,0.4));
+    .cta-strip__image img {
+      width: 100%; height: 100%; object-fit: contain; object-position: center;
+      display: block;
     }
     .cta-strip__text {
       padding: 28px 36px;
@@ -333,31 +349,55 @@
     }
     .step {
       background: var(--white); border-radius: var(--radius);
-      padding: 36px 28px; box-shadow: var(--shadow);
-      position: relative; border-top: 3px solid transparent;
-      transition: transform .2s, box-shadow .2s;
+      overflow: hidden; box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+      opacity: 0; transform: translateX(80px);
+      transition: opacity .55s ease, transform .55s ease, box-shadow .2s;
     }
-    .step:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(9,9,89,0.12); }
-    .step:nth-child(1) { border-top-color: var(--elec); }
-    .step:nth-child(2) { border-top-color: var(--arctic); }
-    .step:nth-child(3) { border-top-color: var(--orange); }
-    .step:nth-child(4) { border-top-color: var(--yellow); }
+    .step.step--visible { opacity: 1; transform: translateX(0); }
+    .step.step--visible:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(9,9,89,0.12); }
+    .step__top {
+      padding: 20px 20px 0;
+    }
     .step__num {
-      width: 40px; height: 40px; border-radius: 50%;
+      width: 36px; height: 36px; border-radius: 50%;
       background: var(--elec); color: var(--white);
-      font-family: var(--font-head); font-weight: 900; font-size: 16px;
+      font-family: var(--font-head); font-weight: 900; font-size: 15px;
       display: flex; align-items: center; justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
     .step:nth-child(2) .step__num { background: var(--arctic); }
     .step:nth-child(3) .step__num { background: var(--orange); }
     .step:nth-child(4) .step__num { background: var(--yellow); color: var(--navy); }
-    .step__icon { font-size: 28px; margin-bottom: 16px; }
-    .step__title {
-      font-family: var(--font-head); font-weight: 800; font-size: 16px;
-      color: var(--navy); margin-bottom: 14px; line-height: 1.3;
+    .step__img {
+      width: 100%; aspect-ratio: 1 / 1;
+      background: var(--white);
+      overflow: hidden;
+      border-top: 3px solid var(--elec);
+      border-bottom: 3px solid var(--elec);
+      padding: 20px;
+      box-sizing: border-box;
     }
-    .step__body { font-size: 14px; color: var(--gray-text); line-height: 1.7; }
+    .step:nth-child(2) .step__img { border-color: var(--arctic); }
+    .step:nth-child(3) .step__img { border-color: var(--orange); }
+    .step:nth-child(4) .step__img { border-color: var(--yellow); }
+    .step__img img {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+      border-radius: 6px;
+    }
+    .step__img--placeholder {
+      display: flex; align-items: center; justify-content: center;
+      border: 2px dashed var(--gray-mid);
+    }
+    .step__img--placeholder svg { width: 36px; height: 36px; color: var(--gray-mid); }
+    .step__body-wrap {
+      padding: 20px;
+    }
+    .step__title {
+      font-family: var(--font-head); font-weight: 800; font-size: 15px;
+      color: var(--navy); margin-bottom: 10px; line-height: 1.3;
+    }
+    .step__body { font-size: 13px; color: var(--gray-text); line-height: 1.7; }
 
     /* ─── FEATURES ────────────────────────────────────────── */
     .features { padding: 100px 0; background: var(--white); }
@@ -369,24 +409,27 @@
       padding: 40px 32px;
       border: 1px solid var(--gray-mid);
       border-radius: var(--radius);
-      transition: border-color .2s, box-shadow .2s, transform .2s;
+      opacity: 0; transform: translateY(60px);
+      transition: opacity .5s ease, transform .5s ease, border-color .2s, box-shadow .2s;
     }
-    .feature-card:hover {
+    .feature-card.feature-card--visible { opacity: 1; transform: translateY(0); }
+    .feature-card.feature-card--visible:hover {
       border-color: var(--elec);
       box-shadow: 0 8px 32px rgba(0,0,255,0.08);
       transform: translateY(-3px);
     }
-    /* 5 cards: 3+2 layout — last row of 2 is centered */
-    .features__grid .feature-card:nth-child(4) {
-      grid-column: 1 / 2;
-    }
-    .features__grid .feature-card:nth-child(5) {
-      grid-column: 2 / 3;
-    }
+    /* 6 cards: clean 3+3 grid, no overrides needed */
     .feature-icon {
-      width: 52px; height: 52px; border-radius: 12px;
-      background: rgba(0,0,255,0.07); display: flex;
-      align-items: center; justify-content: center;
+      height: 78px; width: auto;
+      display: block;
+      margin: 0 auto 22px;
+      object-fit: contain;
+      object-position: center;
+    }
+    .feature-icon--placeholder {
+      height: 62px; width: 62px; border-radius: 12px;
+      background: rgba(0,0,255,0.07);
+      display: flex; align-items: center; justify-content: center;
       margin-bottom: 22px; font-size: 24px;
     }
     .feature-title {
@@ -432,9 +475,12 @@
       font-size: 13px; color: var(--gray-text); line-height: 1.5;
     }
     .email-reassurance svg { width: 14px; height: 14px; flex-shrink: 0; margin-top: 2px; color: var(--gray-text); }
+    .email-msg { display: none; font-size: 13px; font-family: var(--font-body); margin-top: 10px; padding: 10px 14px; border-radius: 8px; }
+    .email-msg--error { background: #fff0ec; color: var(--orange); border: 1px solid #ffd0bc; }
+    .email-msg--success { background: #edfaf1; color: #1a7f45; border: 1px solid #b2e5c4; }
 
     /* ─── ABOUT ───────────────────────────────────────────── */
-    .about { padding: 100px 0; background: var(--white); }
+    .about { padding: 100px 0 50px; background: var(--white); }
     .about__inner {
       display: grid; grid-template-columns: 1fr 1fr;
       gap: 80px; align-items: start;
@@ -448,20 +494,31 @@
     }
     .about__title span { color: var(--orange); }
     .about__body { font-size: 16px; color: var(--gray-text); line-height: 1.8; margin-bottom: 40px; }
-    .founders { display: flex; gap: 24px; }
+    .founders { display: flex; gap: 32px; }
     .founder {
       display: flex; flex-direction: column; align-items: center; gap: 10px;
     }
     .founder__avatar {
-      width: 80px; height: 80px; border-radius: 50%;
-      background: var(--gray-mid); border: 3px solid var(--elec);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 32px; overflow: hidden;
+      width: 96px; height: 96px; border-radius: 50%;
+      border: 3px solid var(--elec);
+      overflow: hidden; flex-shrink: 0;
+    }
+    .founder__avatar img {
+      width: 100%; height: 100%; object-fit: cover; object-position: top;
     }
     .founder__name {
       font-family: var(--font-head); font-weight: 700; font-size: 14px; color: var(--navy);
     }
     .founder__role { font-size: 12px; color: var(--gray-text); }
+    .founder__linkedin {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-head); font-weight: 600; font-size: 11px;
+      color: var(--elec); border: 1px solid var(--elec);
+      padding: 4px 10px; border-radius: 100px;
+      transition: background .15s, color .15s;
+    }
+    .founder__linkedin:hover { background: var(--elec); color: var(--white); }
+    .founder__linkedin svg { width: 11px; height: 11px; }
 
     .about__right { }
     .values__title {
@@ -474,7 +531,10 @@
       padding: 22px 22px; border-radius: var(--radius);
       background: var(--gray-light);
       border-left: 3px solid var(--yellow);
+      opacity: 0; transform: translateX(80px);
+      transition: opacity .5s ease, transform .5s ease;
     }
+    .value-item.value-item--visible { opacity: 1; transform: translateX(0); }
     .value-item:nth-child(2) { border-left-color: var(--orange); }
     .value-item:nth-child(3) { border-left-color: var(--arctic); }
     .value-item:nth-child(4) { border-left-color: var(--elec); }
@@ -484,15 +544,53 @@
     .value-item:nth-child(4) .value-quote { color: var(--elec); }
     .value-text { font-size: 14px; color: var(--gray-text); line-height: 1.7; }
 
+    /* ─── FAQ ─────────────────────────────────────────────── */
+    .faq { padding: 50px 0 100px; background: var(--white); }
+    .faq__header { text-align: center; margin-bottom: 64px; }
+    .faq__header .section-title { margin-bottom: 0; }
+    .faq__list { max-width: 800px; margin: 0 auto; }
+    .faq__item {
+      border-bottom: 1px solid var(--gray-mid);
+    }
+    .faq__item:first-child { border-top: 1px solid var(--gray-mid); }
+    .faq__question {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; padding: 22px 0;
+      font-family: var(--font-head); font-weight: 700; font-size: 15px;
+      color: var(--navy); text-align: left;
+      transition: color .15s;
+    }
+    .faq__question:hover { color: var(--elec); }
+    .faq__question.open { color: var(--elec); }
+    .faq__icon {
+      width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+      border: 1.5px solid var(--gray-mid);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .2s, border-color .2s, transform .25s;
+    }
+    .faq__icon svg { width: 12px; height: 12px; color: var(--navy); transition: color .2s; }
+    .faq__question.open .faq__icon {
+      background: var(--elec); border-color: var(--elec); transform: rotate(45deg);
+    }
+    .faq__question.open .faq__icon svg { color: var(--white); }
+    .faq__answer {
+      display: none; padding: 0 40px 22px 0;
+      font-size: 15px; color: var(--gray-text); line-height: 1.8;
+    }
+    .faq__answer.open { display: block; }
+
     /* ─── FOOTER ──────────────────────────────────────────── */
     .footer { background: var(--navy); padding: 80px 0 40px; }
     .footer__grid {
-      display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      display: grid; grid-template-columns: 1.6fr 1fr 1fr;
       gap: 48px; margin-bottom: 60px;
     }
     .footer__logo { margin-bottom: 16px; }
     .footer__logo img { height: 32px; }
-    .footer__tagline { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 24px; }
+    .footer__tagline { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.6; margin-bottom: 16px; }
+    .footer__company { margin-bottom: 24px; }
+    .footer__company p { font-size: 12px; color: rgba(255,255,255,0.4); line-height: 1.7; }
     .footer__social { display: flex; gap: 14px; }
     .footer__social a {
       width: 38px; height: 38px; border-radius: 8px;
@@ -522,13 +620,15 @@
 
     /* ─── TALK TO US BUTTON ───────────────────────────────── */
     .talk-btn {
+      display: none !important;
       position: fixed; bottom: 32px; right: 32px; z-index: 999;
       display: flex; align-items: center; gap: 10px;
+      border: 1px solid #ffffff;
       background: var(--navy); color: var(--white);
       font-family: var(--font-head); font-weight: 700; font-size: 14px;
       padding: 14px 22px; border-radius: 100px;
       box-shadow: 0 4px 24px rgba(9,9,89,0.3);
-      cursor: pointer; border: none;
+      cursor: pointer;
       transition: transform .2s, box-shadow .2s, background .2s;
     }
     .talk-btn:hover {
@@ -609,7 +709,7 @@
           <a href="#" onclick="setLang('DE','Deutsch');return false;">🇩🇪 Deutsch</a>
         </div>
       </div>
-      <a href="#book" class="btn btn-primary" style="padding:10px 22px;font-size:13px;color:#ffffff;">Book a discovery call</a>
+      <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" class="btn btn-primary" style="padding:10px 22px;font-size:13px;color:#ffffff;">Book a discovery call</a>
     </div>
     <button class="navbar__mobile-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
@@ -622,7 +722,7 @@
   <div class="hero__inner">
     <div class="hero__content">
       <h1 class="hero__title">
-        Product pages for furniture shaped by <span>real customer behavior</span>
+        Furniture Product Pages shaped by <span>Real Customer Behavior</span>
       </h1>
       <p class="hero__body">
         Ixaria replaces fragmented ecommerce plugins with one system that centralizes images, videos, product information, 3D configuration, reviews, and analytics — built to work on top of your current webshop and automatically improve from how your own customers browse, compare, hesitate, and buy.
@@ -642,71 +742,14 @@
         </div>
       </div>
       <div class="hero__ctas">
-        <a href="#book" class="btn btn-primary">Book a discovery call</a>
+        <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" class="btn btn-primary">Book a discovery call</a>
         <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
       </div>
     </div>
 
-    <!-- Product page mockup -->
+    <!-- Hero image -->
     <div class="hero__mockup">
-      <div class="mockup__bar">
-        <div class="mockup__dot" style="background:#FF5F0A"></div>
-        <div class="mockup__dot" style="background:#FFDA00"></div>
-        <div class="mockup__dot" style="background:#00CC66"></div>
-      </div>
-      <div class="mockup__body">
-        <div class="mockup__breadcrumb">Home / Sofas / Modena Sofa</div>
-        <div class="mockup__grid">
-          <div>
-            <div class="mockup__img-area">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-4 0v2M8 21v-4a2 2 0 0 1 4 0v4"/></svg>
-              <div class="mockup__3d-badge">⟳ View in 3D</div>
-            </div>
-            <div style="display:flex;gap:5px;margin-top:8px;">
-              <div style="width:36px;height:28px;background:var(--gray-light);border-radius:4px;border:1px solid var(--elec);"></div>
-              <div style="width:36px;height:28px;background:var(--gray-mid);border-radius:4px;"></div>
-              <div style="width:36px;height:28px;background:#c8b89a;border-radius:4px;"></div>
-              <div style="width:36px;height:28px;background:#5a6a7a;border-radius:4px;"></div>
-              <div style="width:36px;height:28px;background:#2d2d2d;border-radius:4px;"></div>
-            </div>
-          </div>
-          <div class="mockup__info">
-            <div class="mockup__prod-title">Modena Sofa</div>
-            <div class="mockup__stars">★★★★★ <span style="color:var(--gray-text);font-size:10px;">4.8 (128)</span></div>
-            <div class="mockup__price">€1,249.00</div>
-            <div class="mockup__label">Select fabric</div>
-            <div class="mockup__swatches">
-              <div class="mockup__swatch" style="background:#f0ebe3;border-color:var(--elec);"></div>
-              <div class="mockup__swatch" style="background:#c8b89a;"></div>
-              <div class="mockup__swatch" style="background:#8b7355;"></div>
-              <div class="mockup__swatch" style="background:#4a5568;"></div>
-              <div class="mockup__swatch" style="background:#2d2d2d;"></div>
-            </div>
-            <div class="mockup__label">Configure</div>
-            <div class="mockup__configs">
-              <div class="mockup__config">2 Seater</div>
-              <div class="mockup__config active">3 Seater</div>
-              <div class="mockup__config">Corner</div>
-            </div>
-            <button class="mockup__add-btn">Add to cart</button>
-          </div>
-        </div>
-        <div class="mockup__tabs">
-          <div class="mockup__tab active">Details</div>
-          <div class="mockup__tab">Dimensions</div>
-          <div class="mockup__tab">Materials</div>
-          <div class="mockup__tab">Delivery</div>
-          <div class="mockup__tab">Reviews (128)</div>
-        </div>
-        <div class="mockup__details">
-          <div class="mockup__detail"><span>High-res images</span><span>12</span></div>
-          <div class="mockup__detail"><span>3D viewer</span><span>Interactive</span></div>
-          <div class="mockup__detail"><span>Materials</span><span>Premium fabric &amp; wood</span></div>
-          <div class="mockup__detail"><span>Seat depth</span><span>58 cm</span></div>
-          <div class="mockup__detail"><span>Made to order</span><span>Yes</span></div>
-          <div class="mockup__detail"><span>Warranty</span><span>10 years</span></div>
-        </div>
-      </div>
+      <img src="005.png" alt="Ixaria product page example" />
     </div>
   </div>
 </section>
@@ -757,7 +800,7 @@
   <div class="cta-strip__inner">
     <!-- Left image area -->
     <div class="cta-strip__image">
-      <span class="cta-strip__image-sofa">🛋️</span>
+      <img src="Picture1.png" alt="" />
     </div>
     <!-- Text -->
     <div class="cta-strip__text">
@@ -766,7 +809,7 @@
     </div>
     <!-- CTA -->
     <div class="cta-strip__btn-wrap">
-      <a href="https://calendly.com/ixaria" target="_blank" class="btn btn-primary" style="white-space:nowrap;font-size:13px;padding:12px 22px;">Book a discovery call</a>
+      <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" class="btn" style="white-space:nowrap;font-size:13px;padding:12px 22px;background:var(--yellow);color:var(--navy);">Book a discovery call</a>
     </div>
   </div>
 </section>
@@ -786,28 +829,52 @@
     </div>
     <div class="how__steps">
       <div class="step">
-        <div class="step__num">1</div>
-        <div class="step__icon">🗂️</div>
-        <h3 class="step__title">Gather your product data</h3>
-        <p class="step__body">Gather and organize everything behind each product: parts, assemblies, fabrics, materials, dimensions, configurations, pricing logic, care, delivery, and other buying-critical details.</p>
+        <div class="step__top">
+          <div class="step__num">1</div>
+        </div>
+        <div class="step__img">
+          <img src="work-001.png" alt="Gather your product data" />
+        </div>
+        <div class="step__body-wrap">
+          <h3 class="step__title">Gather your product data</h3>
+          <p class="step__body">Gather and organize everything behind each product: parts, assemblies, fabrics, materials, dimensions, configurations, pricing logic, care, delivery, and other buying-critical details.</p>
+        </div>
       </div>
       <div class="step">
-        <div class="step__num">2</div>
-        <div class="step__icon">🔌</div>
-        <h3 class="step__title">Connect Ixaria to your webshop</h3>
-        <p class="step__body">Our team handles the setup, so you do not need to rebuild your entire webshop or add another complicated tool for your team to manage.</p>
+        <div class="step__top">
+          <div class="step__num">2</div>
+        </div>
+        <div class="step__img">
+          <img src="work-002.png" alt="Connect Ixaria to your webshop" />
+        </div>
+        <div class="step__body-wrap">
+          <h3 class="step__title">Connect Ixaria to your webshop</h3>
+          <p class="step__body">Our team handles the setup, so you do not need to rebuild your entire webshop or add another complicated tool for your team to manage.</p>
+        </div>
       </div>
       <div class="step">
-        <div class="step__num">3</div>
-        <div class="step__icon">🚀</div>
-        <h3 class="step__title">Review and launch the product pages</h3>
-        <p class="step__body">You review the product pages, request changes, and approve the final version. Once everything looks right, we set the pages live.</p>
+        <div class="step__top">
+          <div class="step__num">3</div>
+        </div>
+        <div class="step__img">
+          <img src="work-003.png" alt="Review and launch the product pages" />
+        </div>
+        <div class="step__body-wrap">
+          <h3 class="step__title">Review and launch the product pages</h3>
+          <p class="step__body">You review the product pages, request changes, and approve the final version. Once everything looks right, we set the pages live.</p>
+        </div>
       </div>
       <div class="step">
-        <div class="step__num">4</div>
-        <div class="step__icon">📈</div>
-        <h3 class="step__title">Let the system continuously improve</h3>
-        <p class="step__body">After launch, our system kicks in and monitors how customers browse, compare, hesitate, and buy and adapt pages based on this data.</p>
+        <div class="step__top">
+          <div class="step__num">4</div>
+        </div>
+        <div class="step__img">
+          <img src="work-004.png" alt="Let the system continuously improve" />
+        </div>
+        <div class="step__body-wrap">
+          <h3 class="step__title">Let the system continuously improve</h3>
+          <p class="step__body">After launch, our system kicks in and monitors how customers browse, compare, hesitate, and buy and adapt pages based on this data.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -821,29 +888,34 @@
     </div>
     <div class="features__grid">
       <div class="feature-card">
-        <div class="feature-icon">🧩</div>
+        <img src="feature-001.png" class="feature-icon" alt="" />
         <h3 class="feature-title">Replace fragmented plugins with one furniture-specific system</h3>
         <p class="feature-body">Most furniture webshops rely on separate tools for 3D, product data, images, reviews, pricing, and analytics. Ixaria brings the product-page experience into one structured system, so your team does not have to manage a patchwork of disconnected tools.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">📊</div>
+        <img src="feature-002.png" class="feature-icon" alt="" />
         <h3 class="feature-title">Product pages that improve after they go live</h3>
         <p class="feature-body">A product page should not be treated as finished on launch day. Ixaria uses intelligent customer behavior to understand how people browse, compare, hesitate, and buy, then improves the page over time.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🔗</div>
+        <img src="feature-003.png" class="feature-icon" alt="" />
         <h3 class="feature-title">Works on top of your current webshop</h3>
         <p class="feature-body">You don't need to re-design your whole webshop or switch to a different one. Ixaria uses your existing webshop and focuses on the product page as the most important part of the buying journey.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">🎯</div>
+        <img src="feature-004.png" class="feature-icon" alt="" />
         <h3 class="feature-title">Specific to your products, customers, and buying journey</h3>
         <p class="feature-body">Ixaria is not a generic template your competitors can simply copy. The system becomes stronger through your product data, your customer behavior, and the way your buyers make decisions.</p>
       </div>
       <div class="feature-card">
-        <div class="feature-icon">💡</div>
+        <img src="feature-005.png" class="feature-icon" alt="" />
         <h3 class="feature-title">Helps customers understand why your product is worth buying</h3>
         <p class="feature-body">A beautiful image is not enough when the product is expensive, configurable, or hard to compare. Ixaria helps explain value through better structure, clearer information, stronger visuals, and trust-building content.</p>
+      </div>
+      <div class="feature-card">
+        <img src="feature-006.png" class="feature-icon" alt="" />
+        <h3 class="feature-title">Let AI explain the hidden details of your products</h3>
+        <p class="feature-body"><strong>Let AI do the talking.</strong> We already have all the information for your product. Now the AI knows more about each product than any sales person in your company. It can reply to any question, address any concern and advise in terms of fabrics, availability, care, warranty and style.</p>
       </div>
     </div>
   </div>
@@ -853,18 +925,22 @@
 <section class="email-capture" id="newsletter">
   <div class="email-capture__inner">
     <div class="email-capture__img">
-      <div class="email-capture__img-inner">
-        <div class="big-icon">🛋️</div>
-        <p>Follow how furniture manufacturers are turning complex products into better online experiences</p>
-      </div>
+      <img src="sofa.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" />
     </div>
     <div class="email-capture__form-area">
       <h2 class="section-title" style="max-width:440px;">Not ready to change your product pages yet?</h2>
       <p class="section-sub">Join our updates and follow how furniture manufacturers are turning complex products, configurators, and product data into better online buying experiences.</p>
-      <form class="email-form" onsubmit="handleEmailSubmit(event)">
-        <input type="email" placeholder="Work email" required />
+      <form id="sib-form" class="email-form" method="POST"
+        action="https://69e0450c.sibforms.com/serve/MUIFACVS3rrtj81ojnSXAiPp9b2K91wywy0KlChjsTvPS81fROwjY3tZCp3_HkRx2w-hbJrgV7f_dq3q2mbgaKO5RjYHzw8_0WNAIiE6apXK26T2FKxtUWuuynDyHvjdO1kbliDq_B9BB3rGHW49R6PuwECeaGvIrXvgbqWEEamKc9cXMQnlhYeq-aKkvjOtX0Y7oj7SdUYteWFLAg=="
+        data-type="subscription" style="background-color:transparent; margin:0; padding:0;">
+        <input id="EMAIL" name="EMAIL" autocomplete="off" data-required="true" required type="email"
+          placeholder="Work email" />
         <button type="submit" class="btn btn-primary">Stay in the loop</button>
+        <input type="text" name="email_address_check" value="" style="display:none;">
+        <input type="hidden" name="locale" value="en">
       </form>
+      <div id="email-msg-error" class="email-msg email-msg--error">Please enter a valid email address.</div>
+      <div id="email-msg-success" class="email-msg email-msg--success">You're in! We'll be in touch with practical ideas for your product pages.</div>
       <div class="email-reassurance">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Occasional updates. No spam. Only practical ideas about furniture ecommerce, product pages, and conversion.
@@ -883,14 +959,26 @@
       </p>
       <div class="founders">
         <div class="founder">
-          <div class="founder__avatar">👤</div>
+          <div class="founder__avatar">
+            <img src="image_jvvk-gwA_1753779138285_raw.jpg" alt="Alex" />
+          </div>
           <div class="founder__name">Alex</div>
           <div class="founder__role">Co-founder</div>
+          <a href="https://www.linkedin.com/in/alexandru-mesesan/" target="_blank" class="founder__linkedin">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
         </div>
         <div class="founder">
-          <div class="founder__avatar">👤</div>
+          <div class="founder__avatar">
+            <img src="SPO7558_Original.jpg" alt="Victor" />
+          </div>
           <div class="founder__name">Victor</div>
           <div class="founder__role">Co-founder</div>
+          <a href="https://www.linkedin.com/in/victoriancu/" target="_blank" class="founder__linkedin">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
         </div>
       </div>
     </div>
@@ -918,6 +1006,187 @@
   </div>
 </section>
 
+<!-- ══════════ FAQ ══════════ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <hr style="border:none;border-top:1px solid var(--gray-mid);margin:0 0 64px;" />
+    <div class="faq__header">
+      <h2 class="section-title">Frequently asked questions</h2>
+    </div>
+    <div class="faq__list">
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          How long does it take to have the Ixaria solution live?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">It depends on the number of products, how many variations they have, and how complex the setup is. But in most cases, we can have the Ixaria solution live in about one month.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          How much does Ixaria implementation cost?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">The implementation cost is not a fixed price. It depends mainly on the number of products, the complexity of those products, and how much work is needed to prepare the full product page experience.<br><br>Our pricing has two parts: an initial setup fee and an ongoing performance-based monthly fee. The setup fee covers the work needed to prepare and launch the solution, while the monthly fee is connected to the value generated after launch.<br><br>This means our model is aligned with your success. We are not simply charging for software access — we are paid to help your product pages perform better and generate better results.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Do you have any minimum requirements before you start?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Yes. Because Ixaria improves product pages based on real customer behavior, we need a minimum number of monthly visits for the system to collect enough useful data.<br><br>The exact number depends on each manufacturer's situation, especially their production capacity, current sales volume, and how much more they can realistically sell. The goal is to make sure there is enough traffic for the system to learn, test, and improve the product pages in a meaningful way.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Can we start with only a few products?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Yes. In many cases, it makes sense to start with a smaller number of important products, learn from the results, and then expand the system to more of the catalog.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          What data do you need from us to start?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">We usually need product information, images or references, dimensions, material options, pricing rules, available variations, reviews if available, and access to relevant website analytics.<br><br>The exact list depends on the products and the level of complexity.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          How much involvement is needed from my team?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">In the beginning, we need your team's input to understand the products, rules, materials, pricing, and current customer behavior. After the initial setup, your involvement can become much lighter.<br><br>We can agree on how often you want to review changes, results, and new iterations.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          What kind of work do you provide?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Ixaria can cover the full product page experience for furniture manufacturers. Depending on what you already have and what is missing, we can provide 3D modeling, product image generation, dimensioned images, centralized product reviews, 3D configuration, and product page layout design.<br><br>The 3D configuration can range from a simple setup with a few options to a highly complex configurator with many variations, dimensions, materials, and product rules.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Do I need to already have 3D models?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">No. If you already have 3D models, we can work with them. If you do not, we can help create them as part of the implementation process.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Can Ixaria generate product images for all my variations?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Yes. One of the main benefits of Ixaria is that we can generate consistent product images for multiple products, materials, colors, and configurations.<br><br>This helps customers better understand what they are buying without needing a full traditional photoshoot for every variation.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          What kind of furniture products are best suited for Ixaria?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Ixaria is especially useful for furniture products that are complex, customizable, or difficult to explain online.<br><br>This includes sofas, beds, tables, modular furniture, configurable products, and products with multiple materials, sizes, colors, or price variations.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Can Ixaria help if we already have a 3D configurator?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Ixaria does not usually work with existing 3D configurators. Most configurators come with their own limitations, rules, and technical restrictions, which makes it difficult for our system to adapt and improve them based on real customer behavior.<br><br>Instead, we prefer to build the 3D configuration experience inside the Ixaria system, so it can be connected with the product data, page layout, analytics, and ongoing optimization process.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Can Ixaria work with my existing webshop?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Yes. Ixaria is designed to work on top of your current webshop. You do not need to rebuild everything from scratch.<br><br>We focus on improving the product page experience and connecting the necessary product data, visuals, configuration logic, reviews, and analytics around it.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Do I need to replace my current ecommerce platform?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">No. In most cases, Ixaria does not replace your existing ecommerce platform. It improves the product page layer and helps centralize the elements that are usually scattered across different plugins and tools.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Will Ixaria slow down my website?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Performance is part of the implementation process. Since furniture pages often include heavy visuals, 3D content, and many product options, we pay attention to how the page loads and behaves so that the improved experience does not come at the cost of usability.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          What makes Ixaria different from using several plugins?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Most plugins solve one specific problem: images, reviews, 3D configuration, product data, or analytics. Ixaria brings these parts together into one product page system designed specifically for furniture.<br><br>This makes the experience easier to manage, easier to improve, and more consistent for the customer.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          What is the typical revenue increase for existing clients?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">The revenue increase depends on several factors, so there is no fixed number that applies to every manufacturer. One important factor is production capacity. If a company can only produce a certain number of products per month, that becomes a natural limit for how much revenue can grow.<br><br>In our experience, revenue increases can range from around 30% to 300%, depending on the manufacturer's current online performance, brand positioning, production capacity, and how much confidence customers already have in the brand.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          What happens if my conversion rate does not go up immediately after implementation?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">In the first period after launch, the conversion rate may fluctuate while the system learns from real customer behavior. This does not necessarily mean the solution is underperforming. It usually means Ixaria is collecting data, identifying where users hesitate, and adapting the product pages based on how people actually browse, compare, and buy.<br><br>The goal is not only to improve the page at launch, but to keep improving it over time. As more data is collected and more changes are applied, the product pages become better aligned with your customers, which should lead to a stronger conversion rate.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          How do you measure success?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">Success is measured through business and product page performance indicators such as conversion rate, revenue generated, engagement with key sections, use of configuration options, add-to-cart behavior, and the quality of customer interactions on the page.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          How do you decide what changes to make on the product page?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">We look at how customers interact with the product page: where they hesitate, what they click, what information they look for, and where they drop off.<br><br>Based on this behavior, we improve the layout, content, visuals, product information, and configuration flow.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Will I be informed every time your system makes changes to the product page?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">That depends on how involved you want to be. In the beginning, it is usually useful to stay close to the design iterations and product page changes, because your product knowledge and customer understanding can help guide the process.<br><br>Over time, once the system has enough data and the direction is clear, you do not need to be involved in every small change. We can agree on the level of visibility and approval that works best for your team.</div>
+      </div>
+
+      <div class="faq__item">
+        <button class="faq__question" onclick="toggleFaq(this)">
+          Is Ixaria only for large furniture manufacturers?
+          <span class="faq__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
+        </button>
+        <div class="faq__answer">No. Ixaria works only with small and medium furniture manufacturers. Our goal is to help these manufacturers succeed online by giving them the product page system, 3D configuration, visuals, product data, and ongoing optimization they need to sell better without building a large internal ecommerce team.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ══════════ FOOTER ══════════ -->
 <footer class="footer">
   <div class="container">
@@ -927,14 +1196,28 @@
           <img src="logo-dark.svg" alt="Ixaria" />
         </div>
         <p class="footer__tagline">The conversion engine for the furniture industry.</p>
+        <div class="footer__company">
+          <p>VIRTUALCONFIG S.R.L.</p>
+          <p>CIF: 43799883</p>
+          <p>Reg. com.: J2021000791354</p>
+          <p>Str. Surorile Martir Caceu, Nr. 9,<br>Timisoara, Timis, Romania</p>
+        </div>
         <div class="footer__social">
           <!-- LinkedIn -->
-          <a href="#" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/ixaria/" target="_blank" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
           <!-- YouTube -->
-          <a href="#" aria-label="YouTube">
+          <a href="https://www.youtube.com/@alex.mesesan" target="_blank" aria-label="YouTube">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#090959"/></svg>
+          </a>
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/ixaria.ro/" target="_blank" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/ixaria.ro" target="_blank" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
         </div>
       </div>
@@ -943,16 +1226,8 @@
         <div class="footer__links">
           <a href="#social-proof">Why Ixaria</a>
           <a href="#how-it-works">How it works</a>
-          <a href="#features">Results</a>
-          <a href="#book">Book a call</a>
-        </div>
-      </div>
-      <div>
-        <div class="footer__col-title">Company</div>
-        <div class="footer__links">
-          <a href="#about">About</a>
-          <a href="mailto:hello@ixaria.ro">Contact</a>
-          <a href="#" target="_blank">LinkedIn</a>
+          <a href="#features">Features</a>
+          <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank">Book a call</a>
         </div>
       </div>
       <div>
@@ -965,7 +1240,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <p class="footer__copy">© 2025 Ixaria. All rights reserved.</p>
+      <p class="footer__copy">© 2026 Ixaria. All rights reserved.</p>
       <p class="footer__copy">Made with ❤️ in Timișoara, Romania</p>
     </div>
   </div>
@@ -974,7 +1249,7 @@
 <!-- ══════════ TALK TO US ══════════ -->
 <button class="talk-btn" onclick="window.location.href='mailto:hello@ixaria.ro'">
   <div class="talk-btn__dot"></div>
-  <span>Talk to us</span>
+  <span>Chat with us</span>
 </button>
 
 <script>
@@ -1005,7 +1280,102 @@
     });
   });
 
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    // Close all
+    document.querySelectorAll('.faq__question.open').forEach(q => {
+      q.classList.remove('open');
+      q.nextElementSibling.classList.remove('open');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      btn.classList.add('open');
+      answer.classList.add('open');
+    }
+  }
+
   // Navbar scroll shadow
+  // Built by Builders — values cards from right, 200ms stagger
+  const valueItems = document.querySelectorAll('.value-item');
+  const valuesObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      valueItems.forEach((item, i) => {
+        setTimeout(() => item.classList.add('value-item--visible'), i * 200);
+      });
+      valuesObserver.disconnect();
+    }
+  }, { threshold: 0.15 });
+  valuesObserver.observe(document.querySelector('.values'));
+
+  // Features — staggered card entrance from bottom
+  const featureCards = document.querySelectorAll('.feature-card');
+  const featuresObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      featureCards.forEach((card, i) => {
+        setTimeout(() => card.classList.add('feature-card--visible'), i * 300);
+      });
+      featuresObserver.disconnect();
+    }
+  }, { threshold: 0.1 });
+  featuresObserver.observe(document.querySelector('.features__grid'));
+
+  // How it works — staggered card entrance from right
+  const steps = document.querySelectorAll('.step');
+  const stepsObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      steps.forEach((step, i) => {
+        setTimeout(() => step.classList.add('step--visible'), i * 250);
+      });
+      stepsObserver.disconnect();
+    }
+  }, { threshold: 0.15 });
+  stepsObserver.observe(document.querySelector('.how__steps'));
+
+  // CTA strip scroll animation
+  const ctaSection = document.querySelector('.cta-strip');
+  const ctaObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        ctaSection.classList.add('cta-strip--visible');
+        ctaObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.2 });
+  ctaObserver.observe(ctaSection);
+
+  // Email form validation & submission
+  const sibForm = document.getElementById('sib-form');
+  const emailInput = document.getElementById('EMAIL');
+  const msgError = document.getElementById('email-msg-error');
+  const msgSuccess = document.getElementById('email-msg-success');
+
+  function showMsg(el) {
+    [msgError, msgSuccess].forEach(m => { m.style.display = 'none'; });
+    el.style.display = 'block';
+  }
+
+  sibForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const val = emailInput.value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    if (!valid) { showMsg(msgError); return; }
+
+    const data = new FormData(sibForm);
+    try {
+      await fetch(sibForm.action, { method: 'POST', body: data, mode: 'no-cors' });
+      showMsg(msgSuccess);
+      emailInput.value = '';
+    } catch {
+      showMsg(msgError);
+    }
+  });
+
+  emailInput.addEventListener('input', () => {
+    [msgError, msgSuccess].forEach(m => { m.style.display = 'none'; });
+  });
+
   const navbar = document.querySelector('.navbar');
   window.addEventListener('scroll', () => {
     navbar.style.boxShadow = window.scrollY > 10
@@ -1013,5 +1383,6 @@
       : '0 2px 12px rgba(9,9,89,0.06)';
   });
 </script>
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 </body>
 </html>
