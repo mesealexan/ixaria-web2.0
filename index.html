@@ -4,7 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="icon" type="image/svg+xml" href="IXARIA-logo.svg" />
-  <title>Ixaria — The Conversion Engine for Furniture</title>
+  <title>Ixaria — Furniture Product Pages Shaped by Real Customer Behavior</title>
+  <meta name="description" content="Ixaria helps small and medium furniture manufacturers sell more online. One system for product pages, 3D configuration, images, reviews, and analytics — built on top of your existing webshop and continuously improved by real customer behavior." />
+  <meta name="keywords" content="furniture product pages, furniture ecommerce, 3D configurator furniture, product page optimization, furniture manufacturer webshop, furniture online sales" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://ixaria.ro/" />
+  <meta property="og:title" content="Ixaria — Furniture Product Pages Shaped by Real Customer Behavior" />
+  <meta property="og:description" content="One system for product pages, 3D configuration, images, reviews, and analytics — built on top of your existing webshop and continuously improved by real customer behavior." />
+  <meta property="og:image" content="https://ixaria.ro/005.png" />
+  <meta property="og:site_name" content="Ixaria" />
+  <meta property="og:locale" content="en_US" />
+
+  <!-- Canonical & Robots -->
+  <link rel="canonical" href="https://ixaria.ro/" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <link rel="alternate" hreflang="en" href="https://ixaria.ro/" />
+  <link rel="alternate" hreflang="x-default" href="https://ixaria.ro/" />
+
+  <!-- Twitter / X Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ixaria — Furniture Product Pages Shaped by Real Customer Behavior" />
+  <meta name="twitter:description" content="One system for product pages, 3D configuration, images, reviews, and analytics — built on top of your existing webshop." />
+  <meta name="twitter:image" content="https://ixaria.ro/005.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -685,7 +708,8 @@
 <body>
 
 <!-- ══════════ NAVBAR ══════════ -->
-<nav class="navbar">
+<header>
+<nav class="navbar" aria-label="Main navigation">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
       <img src="logo-light.svg" alt="Ixaria" />
@@ -708,13 +732,16 @@
           <a href="#" onclick="setLang('DE','Deutsch');return false;">🇩🇪 Deutsch</a>
         </div>
       </div>
-      <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" class="btn btn-primary" style="padding:10px 22px;font-size:13px;color:#ffffff;">Book a discovery call</a>
+      <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding:10px 22px;font-size:13px;color:#ffffff;">Book a discovery call</a>
     </div>
     <button class="navbar__mobile-toggle" aria-label="Menu">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
     </button>
   </div>
 </nav>
+</header>
+
+<main id="main-content">
 
 <!-- ══════════ HERO ══════════ -->
 <section class="hero" id="hero">
@@ -741,14 +768,14 @@
         </div>
       </div>
       <div class="hero__ctas">
-        <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" class="btn btn-primary">Book a discovery call</a>
+        <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Book a discovery call</a>
         <a href="#how-it-works" class="btn btn-secondary">See how it works</a>
       </div>
     </div>
 
     <!-- Hero image -->
     <div class="hero__mockup">
-      <img src="005.png" alt="Ixaria product page example" />
+      <img src="005.png" alt="Example of an Ixaria-optimized furniture product page" width="640" height="480" />
     </div>
   </div>
 </section>
@@ -786,10 +813,10 @@
       </div>
     </div>
     <div class="logos-strip">
-      <img src="logo_agache.svg"       alt="Agache"       class="logo-agache" />
-      <img src="logo_divanissimi.png"  alt="Divanissimi" />
-      <img src="logo_expomob.svg"      alt="Expomob"      class="logo-expomob" />
-      <img src="logo_eurosun.png"      alt="Eurosun" />
+      <img src="logo_agache.svg"       alt="Agache — Ixaria client"       class="logo-agache" loading="lazy" />
+      <img src="logo_divanissimi.png"  alt="Divanissimi — Ixaria client" loading="lazy" />
+      <img src="logo_expomob.svg"      alt="Expomob — Ixaria client"      class="logo-expomob" loading="lazy" />
+      <img src="logo_eurosun.png"      alt="Eurosun — Ixaria client" loading="lazy" />
     </div>
   </div>
 </section>
@@ -799,7 +826,7 @@
   <div class="cta-strip__inner">
     <!-- Left image area -->
     <div class="cta-strip__image">
-      <img src="Picture1.png" alt="" />
+      <img src="Picture1.png" alt="Furniture product page consultation" loading="lazy" />
     </div>
     <!-- Text -->
     <div class="cta-strip__text">
@@ -808,7 +835,7 @@
     </div>
     <!-- CTA -->
     <div class="cta-strip__btn-wrap">
-      <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" class="btn" style="white-space:nowrap;font-size:13px;padding:12px 22px;background:var(--yellow);color:var(--navy);">Book a discovery call</a>
+      <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" rel="noopener noreferrer" class="btn" style="white-space:nowrap;font-size:13px;padding:12px 22px;background:var(--yellow);color:var(--navy);">Book a discovery call</a>
     </div>
   </div>
 </section>
@@ -832,7 +859,7 @@
           <div class="step__num">1</div>
         </div>
         <div class="step__img">
-          <img src="work-001.png" alt="Gather your product data" />
+          <img src="work-001.png" alt="Gathering furniture product data — step 1 of Ixaria setup" loading="lazy" />
         </div>
         <div class="step__body-wrap">
           <h3 class="step__title">Gather your product data</h3>
@@ -844,7 +871,7 @@
           <div class="step__num">2</div>
         </div>
         <div class="step__img">
-          <img src="work-002.png" alt="Connect Ixaria to your webshop" />
+          <img src="work-002.png" alt="Connecting Ixaria to your furniture webshop — step 2" loading="lazy" />
         </div>
         <div class="step__body-wrap">
           <h3 class="step__title">Connect Ixaria to your webshop</h3>
@@ -856,7 +883,7 @@
           <div class="step__num">3</div>
         </div>
         <div class="step__img">
-          <img src="work-003.png" alt="Review and launch the product pages" />
+          <img src="work-003.png" alt="Reviewing and launching furniture product pages — step 3" loading="lazy" />
         </div>
         <div class="step__body-wrap">
           <h3 class="step__title">Review and launch the product pages</h3>
@@ -868,7 +895,7 @@
           <div class="step__num">4</div>
         </div>
         <div class="step__img">
-          <img src="work-004.png" alt="Let the system continuously improve" />
+          <img src="work-004.png" alt="Ixaria system continuously improving product pages based on customer behavior — step 4" loading="lazy" />
         </div>
         <div class="step__body-wrap">
           <h3 class="step__title">Let the system continuously improve</h3>
@@ -887,32 +914,32 @@
     </div>
     <div class="features__grid">
       <div class="feature-card">
-        <img src="feature-001.png" class="feature-icon" alt="" />
+        <img src="feature-001.png" class="feature-icon" alt="Unified furniture product page system" loading="lazy" />
         <h3 class="feature-title">Replace fragmented plugins with one furniture-specific system</h3>
         <p class="feature-body">Most furniture webshops rely on separate tools for 3D, product data, images, reviews, pricing, and analytics. Ixaria brings the product-page experience into one structured system, so your team does not have to manage a patchwork of disconnected tools.</p>
       </div>
       <div class="feature-card">
-        <img src="feature-002.png" class="feature-icon" alt="" />
+        <img src="feature-002.png" class="feature-icon" alt="Product pages that continuously improve after launch" loading="lazy" />
         <h3 class="feature-title">Product pages that improve after they go live</h3>
         <p class="feature-body">A product page should not be treated as finished on launch day. Ixaria uses intelligent customer behavior to understand how people browse, compare, hesitate, and buy, then improves the page over time.</p>
       </div>
       <div class="feature-card">
-        <img src="feature-003.png" class="feature-icon" alt="" />
+        <img src="feature-003.png" class="feature-icon" alt="Ixaria works on top of your existing webshop" loading="lazy" />
         <h3 class="feature-title">Works on top of your current webshop</h3>
         <p class="feature-body">You don't need to re-design your whole webshop or switch to a different one. Ixaria uses your existing webshop and focuses on the product page as the most important part of the buying journey.</p>
       </div>
       <div class="feature-card">
-        <img src="feature-004.png" class="feature-icon" alt="" />
+        <img src="feature-004.png" class="feature-icon" alt="Product pages specific to your products and customers" loading="lazy" />
         <h3 class="feature-title">Specific to your products, customers, and buying journey</h3>
         <p class="feature-body">Ixaria is not a generic template your competitors can simply copy. The system becomes stronger through your product data, your customer behavior, and the way your buyers make decisions.</p>
       </div>
       <div class="feature-card">
-        <img src="feature-005.png" class="feature-icon" alt="" />
+        <img src="feature-005.png" class="feature-icon" alt="Helping customers understand why your furniture product is worth buying" loading="lazy" />
         <h3 class="feature-title">Helps customers understand why your product is worth buying</h3>
         <p class="feature-body">A beautiful image is not enough when the product is expensive, configurable, or hard to compare. Ixaria helps explain value through better structure, clearer information, stronger visuals, and trust-building content.</p>
       </div>
       <div class="feature-card">
-        <img src="feature-006.png" class="feature-icon" alt="" />
+        <img src="feature-006.png" class="feature-icon" alt="AI explaining hidden product details to furniture buyers" loading="lazy" />
         <h3 class="feature-title">Let AI explain the hidden details of your products</h3>
         <p class="feature-body"><strong>Let AI do the talking.</strong> We already have all the information for your product. Now the AI knows more about each product than any sales person in your company. It can reply to any question, address any concern and advise in terms of fabrics, availability, care, warranty and style.</p>
       </div>
@@ -924,7 +951,7 @@
 <section class="email-capture" id="newsletter">
   <div class="email-capture__inner">
     <div class="email-capture__img">
-      <img src="sofa.png" alt="" style="width:100%;height:100%;object-fit:cover;display:block;" />
+      <img src="sofa.png" alt="Furniture manufacturer newsletter — stay updated on ecommerce best practices" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;" />
     </div>
     <div class="email-capture__form-area">
       <h2 class="section-title" style="max-width:440px;">Not ready to change your product pages yet?</h2>
@@ -959,22 +986,22 @@
       <div class="founders">
         <div class="founder">
           <div class="founder__avatar">
-            <img src="image_jvvk-gwA_1753779138285_raw.jpg" alt="Alex" />
+            <img src="image_jvvk-gwA_1753779138285_raw.jpg" alt="Alexandru Mesesan — Co-founder of Ixaria" loading="lazy" />
           </div>
           <div class="founder__name">Alex</div>
           <div class="founder__role">Co-founder</div>
-          <a href="https://www.linkedin.com/in/alexandru-mesesan/" target="_blank" class="founder__linkedin">
+          <a href="https://www.linkedin.com/in/alexandru-mesesan/" target="_blank" rel="noopener noreferrer" class="founder__linkedin">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
             LinkedIn
           </a>
         </div>
         <div class="founder">
           <div class="founder__avatar">
-            <img src="SPO7558_Original.jpg" alt="Victor" />
+            <img src="SPO7558_Original.jpg" alt="Victor Iancu — Co-founder of Ixaria" loading="lazy" />
           </div>
           <div class="founder__name">Victor</div>
           <div class="founder__role">Co-founder</div>
-          <a href="https://www.linkedin.com/in/victoriancu/" target="_blank" class="founder__linkedin">
+          <a href="https://www.linkedin.com/in/victoriancu/" target="_blank" rel="noopener noreferrer" class="founder__linkedin">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
             LinkedIn
           </a>
@@ -982,7 +1009,7 @@
       </div>
     </div>
     <div class="about__right">
-      <div class="values__title">Our values</div>
+      <h2 class="values__title">Our values</h2>
       <div class="values">
         <div class="value-item">
           <div class="value-quote">❝</div>
@@ -1186,6 +1213,8 @@
   </div>
 </section>
 
+</main>
+
 <!-- ══════════ FOOTER ══════════ -->
 <footer class="footer">
   <div class="container">
@@ -1203,19 +1232,19 @@
         </div>
         <div class="footer__social">
           <!-- LinkedIn -->
-          <a href="https://www.linkedin.com/company/ixaria/" target="_blank" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/company/ixaria/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
           </a>
           <!-- YouTube -->
-          <a href="https://www.youtube.com/@alex.mesesan" target="_blank" aria-label="YouTube">
+          <a href="https://www.youtube.com/@alex.mesesan" target="_blank" rel="noopener noreferrer" aria-label="YouTube">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="#090959"/></svg>
           </a>
           <!-- Instagram -->
-          <a href="https://www.instagram.com/ixaria.ro/" target="_blank" aria-label="Instagram">
+          <a href="https://www.instagram.com/ixaria.ro/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
           </a>
           <!-- Facebook -->
-          <a href="https://www.facebook.com/ixaria.ro" target="_blank" aria-label="Facebook">
+          <a href="https://www.facebook.com/ixaria.ro" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
         </div>
@@ -1226,7 +1255,7 @@
           <a href="#social-proof">Why Ixaria</a>
           <a href="#how-it-works">How it works</a>
           <a href="#features">Features</a>
-          <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank">Book a call</a>
+          <a href="https://calendly.com/alex-ixaria/ixaria-strategy-session" target="_blank" rel="noopener noreferrer">Book a call</a>
         </div>
       </div>
       <div>
@@ -1383,5 +1412,207 @@
   });
 </script>
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+
+<!-- ══════════ STRUCTURED DATA (JSON-LD) ══════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ixaria.ro/#organization",
+      "name": "Ixaria",
+      "legalName": "VIRTUALCONFIG S.R.L.",
+      "url": "https://ixaria.ro",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ixaria.ro/logo-light.svg"
+      },
+      "description": "Ixaria helps small and medium furniture manufacturers sell more online through product page optimization, 3D configuration, AI-assisted product explanations, and behavior-driven continuous improvement.",
+      "foundingDate": "2021",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Str. Surorile Martir Caceu, Nr. 9",
+        "addressLocality": "Timisoara",
+        "addressRegion": "Timis",
+        "addressCountry": "RO"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "office@ixaria.ro",
+        "contactType": "customer service"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/ixaria/",
+        "https://www.facebook.com/ixaria.ro",
+        "https://www.instagram.com/ixaria.ro/",
+        "https://www.youtube.com/@alex.mesesan"
+      ],
+      "founder": [
+        {
+          "@type": "Person",
+          "name": "Alexandru Mesesan",
+          "jobTitle": "Co-founder",
+          "sameAs": "https://www.linkedin.com/in/alexandru-mesesan/"
+        },
+        {
+          "@type": "Person",
+          "name": "Victor Iancu",
+          "jobTitle": "Co-founder",
+          "sameAs": "https://www.linkedin.com/in/victoriancu/"
+        }
+      ],
+      "knowsAbout": [
+        "furniture ecommerce",
+        "product page optimization",
+        "3D product configurators",
+        "furniture webshop conversion",
+        "customer behavior analytics",
+        "furniture manufacturer digital transformation"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ixaria.ro/#website",
+      "url": "https://ixaria.ro",
+      "name": "Ixaria",
+      "description": "The conversion engine for furniture manufacturers",
+      "publisher": { "@id": "https://ixaria.ro/#organization" }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ixaria.ro/#webpage",
+      "url": "https://ixaria.ro",
+      "name": "Ixaria — Furniture Product Pages Shaped by Real Customer Behavior",
+      "description": "Ixaria helps small and medium furniture manufacturers sell more online with one system for product pages, 3D configuration, images, reviews, and analytics.",
+      "isPartOf": { "@id": "https://ixaria.ro/#website" },
+      "about": { "@id": "https://ixaria.ro/#organization" },
+      "dateModified": "2026-05-27"
+    },
+    {
+      "@type": "Service",
+      "@id": "https://ixaria.ro/#service",
+      "name": "Furniture Product Page Optimization",
+      "provider": { "@id": "https://ixaria.ro/#organization" },
+      "serviceType": "Ecommerce product page optimization for furniture manufacturers",
+      "description": "Ixaria replaces fragmented ecommerce plugins with one system that centralizes images, videos, product information, 3D configuration, reviews, and analytics. It works on top of your existing webshop and continuously improves from real customer behavior.",
+      "audience": {
+        "@type": "BusinessAudience",
+        "audienceType": "Small and medium furniture manufacturers"
+      },
+      "areaServed": "Europe",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Ixaria Services",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "3D Product Configuration" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Image Generation" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Product Page Layout Design" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Customer Behavior Analytics" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Product Explanation" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Centralized Product Reviews" } }
+        ]
+      }
+    },
+    {
+      "@type": "HowTo",
+      "name": "How Ixaria Works",
+      "description": "How Ixaria sets up and continuously improves furniture product pages for manufacturers",
+      "totalTime": "P1M",
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Gather your product data",
+          "text": "Gather and organize everything behind each product: parts, assemblies, fabrics, materials, dimensions, configurations, pricing logic, care, delivery, and other buying-critical details."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Connect Ixaria to your webshop",
+          "text": "Our team handles the setup, so you do not need to rebuild your entire webshop or add another complicated tool for your team to manage."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Review and launch the product pages",
+          "text": "You review the product pages, request changes, and approve the final version. Once everything looks right, we set the pages live."
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Let the system continuously improve",
+          "text": "After launch, our system monitors how customers browse, compare, hesitate, and buy — then adapts pages based on this data."
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How long does it take to have the Ixaria solution live?",
+          "acceptedAnswer": { "@type": "Answer", "text": "It depends on the number of products, how many variations they have, and how complex the setup is. But in most cases, we can have the Ixaria solution live in about one month." }
+        },
+        {
+          "@type": "Question",
+          "name": "How much does Ixaria implementation cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "The implementation cost is not a fixed price. It depends mainly on the number of products, the complexity of those products, and how much work is needed to prepare the full product page experience. Our pricing has two parts: an initial setup fee and an ongoing performance-based monthly fee. The setup fee covers the work needed to prepare and launch the solution, while the monthly fee is connected to the value generated after launch." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you have any minimum requirements before you start?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Because Ixaria improves product pages based on real customer behavior, we need a minimum number of monthly visits for the system to collect enough useful data. The exact number depends on each manufacturer's situation, especially their production capacity, current sales volume, and how much more they can realistically sell." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can we start with only a few products?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. In many cases, it makes sense to start with a smaller number of important products, learn from the results, and then expand the system to more of the catalog." }
+        },
+        {
+          "@type": "Question",
+          "name": "What data do you need from us to start?",
+          "acceptedAnswer": { "@type": "Answer", "text": "We usually need product information, images or references, dimensions, material options, pricing rules, available variations, reviews if available, and access to relevant website analytics. The exact list depends on the products and the level of complexity." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can Ixaria work with my existing webshop?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Ixaria is designed to work on top of your current webshop. You do not need to rebuild everything from scratch. We focus on improving the product page experience and connecting the necessary product data, visuals, configuration logic, reviews, and analytics around it." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to replace my current ecommerce platform?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. In most cases, Ixaria does not replace your existing ecommerce platform. It improves the product page layer and helps centralize the elements that are usually scattered across different plugins and tools." }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of furniture products are best suited for Ixaria?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Ixaria is especially useful for furniture products that are complex, customizable, or difficult to explain online. This includes sofas, beds, tables, modular furniture, configurable products, and products with multiple materials, sizes, colors, or price variations." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the typical revenue increase for existing clients?",
+          "acceptedAnswer": { "@type": "Answer", "text": "In our experience, revenue increases can range from around 30% to 300%, depending on the manufacturer's current online performance, brand positioning, production capacity, and how much confidence customers already have in the brand." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Ixaria only for large furniture manufacturers?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Ixaria works only with small and medium furniture manufacturers. Our goal is to help these manufacturers succeed online by giving them the product page system, 3D configuration, visuals, product data, and ongoing optimization they need to sell better without building a large internal ecommerce team." }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Ixaria different from using several plugins?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Most plugins solve one specific problem: images, reviews, 3D configuration, product data, or analytics. Ixaria brings these parts together into one product page system designed specifically for furniture. This makes the experience easier to manage, easier to improve, and more consistent for the customer." }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to already have 3D models?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. If you already have 3D models, we can work with them. If you do not, we can help create them as part of the implementation process." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 </body>
 </html>
